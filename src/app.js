@@ -12,12 +12,12 @@ applyMiddleWares(app);
 
 //Routes
 const featuresRoutes = require('./routes/features/featuresRoutes');
-
+const usersRoutes = require('./routes/users/usersRoutes');
 
 
 //Use routes
 app.use(featuresRoutes);
-
+app.use(usersRoutes);
 
 
 
