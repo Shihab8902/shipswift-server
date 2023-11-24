@@ -13,11 +13,13 @@ applyMiddleWares(app);
 //Routes
 const featuresRoutes = require('./routes/features/featuresRoutes');
 const usersRoutes = require('./routes/users/usersRoutes');
+const jwtRoutes = require("./routes/jwt/generateJwt");
 
 
 //Use routes
 app.use(featuresRoutes);
 app.use(usersRoutes);
+app.use(jwtRoutes);
 
 
 
