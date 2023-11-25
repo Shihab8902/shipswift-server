@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const bookingCollection = require("../../models/bookings/bookingsModel");
 
 
@@ -20,8 +21,18 @@ const getUserSpecificBookings = async (req, res, next) => {
 }
 
 
-
-
+//Get a booking
+const getABooking = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const query = { _id: new mongoose.Types.ObjectId(id) };
+        const result = await bookingCollection.findOne(query);
+        res.send(result);
+    }
+    catch (error) {
+        next(error);
+    }
+}
 
 
 //post a new booking
@@ -38,4 +49,21 @@ const postBooking = async (req, res, next) => {
 }
 
 
-module.exports = { postBooking, getUserSpecificBookings };
+
+//Update a booking
+const updateBooking = async (req, res, next) => {
+    try {
+        const id = req.query.id;
+        const document = req.body;
+        const query = { _id: new mongoose.Types.ObjectId(id) };
+
+        const result = await bookingCollection.updateOne(query, document);
+        res.send(result);
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+
+module.exports = { postBooking, getUserSpecificBookings, getABooking, updateBooking };
