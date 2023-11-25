@@ -13,6 +13,20 @@ const getUsers = async (req, res, next) => {
 
 
 
+//get a specific user
+const getSpecificUser = async (req, res, next) => {
+    try {
+        const { email } = req.query;
+        const query = { email: email };
+        const result = await userCollection.findOne(query);
+        res.send(result);
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+
 //add a new user
 const setUser = async (req, res, next) => {
     try {
@@ -37,4 +51,4 @@ const setUser = async (req, res, next) => {
 
 
 
-module.exports = { getUsers, setUser };
+module.exports = { getUsers, setUser, getSpecificUser };
