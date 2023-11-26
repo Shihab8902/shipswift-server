@@ -15,6 +15,8 @@ const featuresRoutes = require('./routes/features/featuresRoutes');
 const usersRoutes = require('./routes/users/usersRoutes');
 const jwtRoutes = require("./routes/jwt/generateJwt");
 const bookingsRoutes = require("./routes/bookings/bookingsRoutes");
+const stripeRoutes = require("./routes/stripe/stripeRoutes");
+const paymentRoutes = require("./routes/payment/paymentRoutes");
 
 
 //Use routes
@@ -22,6 +24,8 @@ app.use(featuresRoutes);
 app.use(usersRoutes);
 app.use(jwtRoutes);
 app.use(bookingsRoutes);
+app.use(stripeRoutes);
+app.use(paymentRoutes);
 
 
 
