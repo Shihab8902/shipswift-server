@@ -3,8 +3,51 @@ const userCollection = require("../../models/users/usersModel")
 //get all users
 const getUsers = async (req, res, next) => {
     try {
-        const users = await userCollection.find();
-        res.send(users);
+
+        const skipItem = parseInt(req.query.skip);
+        const itemLimit = parseInt(req.query.limit);
+
+        const usersWithBookingInfo = await userCollection.aggregate([
+            {
+                $lookup: {
+                    from: "bookings",
+                    localField: "email",
+                    foreignField: "email",
+                    as: "bookings",
+                },
+
+            },
+            {
+                $unwind: {
+                    path: "$bookings",
+                    preserveNullAndEmptyArrays: true,
+                }
+            },
+            {
+                $group: {
+                    _id: "$_id",
+                    user: { $first: "$$ROOT" },
+                    phone: { $first: "$bookings.phone" },
+                    totalPrice: { $sum: "$bookings.calculatedDeliveryPrice" },
+                    numberOfParcelBooked: { $sum: { $cond: { if: '$bookings', then: 1, else: 0 } } }
+                }
+            },
+            {
+                $project: {
+                    "user.bookings": 0,
+                    _id: 0
+                }
+            },
+            {
+                $skip: skipItem
+            },
+            {
+                $limit: itemLimit
+            }
+
+        ]);
+
+        res.send(usersWithBookingInfo);
     }
     catch (error) {
         next(error);
@@ -20,6 +63,18 @@ const getSpecificUser = async (req, res, next) => {
         const query = { email: email };
         const result = await userCollection.findOne(query);
         res.send(result);
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+
+//get total users count
+const getTotalUserCount = async (req, res, next) => {
+    try {
+        const totalUser = await userCollection.estimatedDocumentCount();
+        res.send({ totalUser });
     }
     catch (error) {
         next(error);
@@ -66,6 +121,26 @@ const updateProfilePicture = async (req, res, next) => {
 }
 
 
+//update user role
+const updateUserRole = async (req, res, next) => {
+    try {
+        const email = req.query.email;
+        const userRole = req.query.role;
+
+        console.log(email, userRole)
 
 
-module.exports = { getUsers, setUser, getSpecificUser, updateProfilePicture };
+
+        const query = { email: email };
+        const result = await userCollection.updateOne(query, { role: userRole });
+        res.send(result);
+
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+
+
+module.exports = { getUsers, setUser, getSpecificUser, updateProfilePicture, getTotalUserCount, updateUserRole };

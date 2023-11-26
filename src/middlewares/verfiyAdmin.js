@@ -1,5 +1,7 @@
+const userCollection = require("../models/users/usersModel");
+
 const verifyAdmin = async (req, res, next) => {
-    const email = req.email.user;
+    const email = req.email.email;
     const query = { email: email }
     const result = await userCollection.findOne(query);
     if (result?.role !== "admin") {
@@ -7,3 +9,6 @@ const verifyAdmin = async (req, res, next) => {
     }
     next();
 }
+
+
+module.exports = verifyAdmin;
