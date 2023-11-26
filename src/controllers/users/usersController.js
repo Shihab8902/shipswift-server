@@ -50,5 +50,22 @@ const setUser = async (req, res, next) => {
 
 
 
+//Update user profile picture
+const updateProfilePicture = async (req, res, next) => {
+    try {
+        const email = req.query.email;
+        console.log(email);
+        const updatedPicture = req.body;
+        const query = { email: email };
+        const result = await userCollection.updateOne(query, updatedPicture)
+        res.send(result);
+    }
+    catch (error) {
+        next(error);
+    }
+}
 
-module.exports = { getUsers, setUser, getSpecificUser };
+
+
+
+module.exports = { getUsers, setUser, getSpecificUser, updateProfilePicture };

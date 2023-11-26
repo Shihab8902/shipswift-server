@@ -1,4 +1,4 @@
-const { getUsers, setUser, getSpecificUser } = require("../../controllers/users/usersController");
+const { getUsers, setUser, getSpecificUser, updateProfilePicture } = require("../../controllers/users/usersController");
 const verifyToken = require("../../middlewares/verifyToken");
 
 const router = require("express").Router();
@@ -11,6 +11,9 @@ router.get("/user", verifyToken, getSpecificUser);
 
 //post a new user
 router.post("/users", setUser);
+
+//Update user profile picture
+router.put("/users", verifyToken, updateProfilePicture);
 
 
 
