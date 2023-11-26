@@ -27,7 +27,6 @@ const getUsers = async (req, res, next) => {
                 $group: {
                     _id: "$_id",
                     user: { $first: "$$ROOT" },
-                    phone: { $first: "$bookings.phone" },
                     totalPrice: { $sum: "$bookings.calculatedDeliveryPrice" },
                     numberOfParcelBooked: { $sum: { $cond: { if: '$bookings', then: 1, else: 0 } } }
                 }
@@ -35,7 +34,8 @@ const getUsers = async (req, res, next) => {
             {
                 $project: {
                     "user.bookings": 0,
-                    _id: 0
+                    _id: 0,
+
                 }
             },
             {
@@ -126,11 +126,6 @@ const updateUserRole = async (req, res, next) => {
     try {
         const email = req.query.email;
         const userRole = req.query.role;
-
-        console.log(email, userRole)
-
-
-
         const query = { email: email };
         const result = await userCollection.updateOne(query, { role: userRole });
         res.send(result);

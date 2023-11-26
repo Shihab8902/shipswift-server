@@ -1,5 +1,5 @@
 const { getUsers, setUser, getSpecificUser, updateProfilePicture, getTotalUserCount, updateUserRole } = require("../../controllers/users/usersController");
-const verifyAdmin = require("../../middlewares/verfiyAdmin");
+const verifyAdmin = require("../../middlewares/verifyAdmin");
 const verifyToken = require("../../middlewares/verifyToken");
 
 const router = require("express").Router();

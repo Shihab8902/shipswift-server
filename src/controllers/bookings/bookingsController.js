@@ -3,6 +3,27 @@ const bookingCollection = require("../../models/bookings/bookingsModel");
 
 
 
+//Get all bookings
+const getBookings = async (req, res, next) => {
+    try {
+
+        const { startDate, endDate } = req.query;
+
+        if (startDate && endDate) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const result = await bookingCollection.find({ requestedDeliveryDate: { $gte: start, $lte: end } });
+            return res.send(result);
+        }
+
+        const result = await bookingCollection.find();
+        res.send(result);
+    }
+    catch (error) {
+        next(error)
+    }
+}
+
 
 //get user specific bookings
 const getUserSpecificBookings = async (req, res, next) => {
@@ -66,4 +87,4 @@ const updateBooking = async (req, res, next) => {
 }
 
 
-module.exports = { postBooking, getUserSpecificBookings, getABooking, updateBooking };
+module.exports = { postBooking, getUserSpecificBookings, getABooking, updateBooking, getBookings };

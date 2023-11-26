@@ -1,8 +1,12 @@
-const { postBooking, getUserSpecificBookings, getABooking, updateBooking } = require("../../controllers/bookings/bookingsController");
+const { postBooking, getUserSpecificBookings, getABooking, updateBooking, getBookings } = require("../../controllers/bookings/bookingsController");
+const verifyAdmin = require("../../middlewares/verifyAdmin");
 const verifyToken = require("../../middlewares/verifyToken");
 
 const router = require("express").Router();
 
+
+//Get all bookings
+router.get("/bookings", verifyToken, verifyAdmin, getBookings)
 
 //Get user specific bookings
 router.get("/booking", verifyToken, getUserSpecificBookings);

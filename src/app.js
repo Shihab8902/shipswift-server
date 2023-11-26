@@ -17,6 +17,7 @@ const jwtRoutes = require("./routes/jwt/generateJwt");
 const bookingsRoutes = require("./routes/bookings/bookingsRoutes");
 const stripeRoutes = require("./routes/stripe/stripeRoutes");
 const paymentRoutes = require("./routes/payment/paymentRoutes");
+const deliveryManRoutes = require("./routes/delivery man/deliveryManRoutes");
 
 
 //Use routes
@@ -26,6 +27,7 @@ app.use(jwtRoutes);
 app.use(bookingsRoutes);
 app.use(stripeRoutes);
 app.use(paymentRoutes);
+app.use(deliveryManRoutes);
 
 
 

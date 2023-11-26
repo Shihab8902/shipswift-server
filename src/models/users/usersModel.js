@@ -16,6 +16,22 @@ const usersSchema = new mongoose.Schema({
     image: {
         type: String,
         required: true,
+    },
+    phone: {
+        type: Number,
+        required: true
+    },
+    parcelDelivered: {
+        type: Number,
+        default: 0
+    },
+    totalReview: {
+        type: Number,
+        default: 0
+    },
+    totalReviewer: {
+        type: Number,
+        default: 0
     }
 });
 

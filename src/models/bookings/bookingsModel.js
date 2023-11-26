@@ -58,6 +58,16 @@ const bookingsSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    image: {
+        type: String,
+        required: true
+    },
+    approximateDeliveryDate: {
+        type: String
+    },
+    deliveryManId: {
+        type: String
+    }
 })
 
 
