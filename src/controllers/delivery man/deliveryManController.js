@@ -21,6 +21,38 @@ const getAllDeliveryMan = async (req, res) => {
 }
 
 
+//get top delivery man
+const getTopDeliveryMan = async (req, res, next) => {
+    try {
+        const result = await userCollection.aggregate([
+            {
+                $match: {
+                    role: 'deliveryMan',
+                    parcelDelivered: { $exists: true },
+                    totalReview: { $exists: true },
+                    totalReviewer: { $exists: true },
+                },
+            },
+            {
+                $sort: {
+                    parcelDelivered: -1,
+                    totalReview: -1,
+                    totalReviewer: -1,
+                },
+            },
+            {
+                $limit: 5,
+            },
+        ]);
+
+        res.send(result);
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+
 
 //get specific delivery man
 const getSpecificDeliveryMan = async (req, res, next) => {
@@ -38,4 +70,4 @@ const getSpecificDeliveryMan = async (req, res, next) => {
 
 
 
-module.exports = { getAllDeliveryMan, getSpecificDeliveryMan };
+module.exports = { getAllDeliveryMan, getSpecificDeliveryMan, getTopDeliveryMan };

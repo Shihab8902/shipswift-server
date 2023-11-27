@@ -28,5 +28,5 @@ router.put("/bookings", verifyToken, updateBooking);
 router.get("/admin/bookings", verifyToken, verifyAdmin, getBookingByDate);
 
 //Get total bookings and delivered bookings
-router.get("/admin/bookingCount", verifyToken, verifyAdmin, getBookingCount);
+router.get("/admin/bookingCount", getBookingCount);
 module.exports = router;

@@ -13,6 +13,7 @@ router.get("/user", verifyToken, getSpecificUser);
 //get total user count
 router.get("/users/total", getTotalUserCount);
 
+
 //post a new user
 router.post("/users", setUser);
 
