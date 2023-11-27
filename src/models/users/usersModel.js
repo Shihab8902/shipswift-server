@@ -19,7 +19,6 @@ const usersSchema = new mongoose.Schema({
     },
     phone: {
         type: Number,
-        required: true
     },
     parcelDelivered: {
         type: Number,

@@ -1,4 +1,4 @@
-const { postBooking, getUserSpecificBookings, getABooking, updateBooking, getBookings, getDeliverymanBooking } = require("../../controllers/bookings/bookingsController");
+const { postBooking, getUserSpecificBookings, getABooking, updateBooking, getBookings, getDeliverymanBooking, getBookingByDate, getBookingCount } = require("../../controllers/bookings/bookingsController");
 const verifyAdmin = require("../../middlewares/verifyAdmin");
 const verifyToken = require("../../middlewares/verifyToken");
 
@@ -23,4 +23,10 @@ router.post("/bookings", verifyToken, postBooking);
 //Update a booking
 router.put("/bookings", verifyToken, updateBooking);
 
+
+//Get totalBooking by date
+router.get("/admin/bookings", verifyToken, verifyAdmin, getBookingByDate);
+
+//Get total bookings and delivered bookings
+router.get("/admin/bookingCount", verifyToken, verifyAdmin, getBookingCount);
 module.exports = router;

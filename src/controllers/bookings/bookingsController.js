@@ -103,4 +103,66 @@ const updateBooking = async (req, res, next) => {
 }
 
 
-module.exports = { postBooking, getUserSpecificBookings, getABooking, updateBooking, getBookings, getDeliverymanBooking };
+
+//Get bookings by date
+const getBookingByDate = async (req, res, next) => {
+    try {
+        const result = await bookingCollection.aggregate([
+            {
+                $group: {
+                    _id: {
+                        $dateToString: {
+                            format: "%Y-%m-%d",
+                            date: "$bookingDate",
+                        },
+                    },
+                    bookingCount: { $sum: 1 },
+                },
+            },
+            {
+                $project: {
+                    date: "$_id",
+                    bookingCount: 1,
+                    _id: 0,
+                },
+            },
+        ]);
+
+        res.send(result);
+    }
+
+    catch (error) {
+        next(error);
+    }
+}
+
+
+
+
+//get booking count 
+const getBookingCount = async (req, res, next) => {
+    try {
+        const result = await bookingCollection.aggregate([
+            {
+                $group: {
+                    _id: "$status",
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
+
+
+        const delivered = result.find(item => item._id === "delivered")?.count || 0;
+        const total = await bookingCollection.estimatedDocumentCount();
+
+        res.send({ delivered, total: total });
+
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+
+
+module.exports = { postBooking, getUserSpecificBookings, getABooking, updateBooking, getBookings, getDeliverymanBooking, getBookingByDate, getBookingCount };
