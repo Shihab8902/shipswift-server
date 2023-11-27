@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const userCollection = require("../../models/users/usersModel")
 
 //get all users
@@ -138,4 +139,20 @@ const updateUserRole = async (req, res, next) => {
 
 
 
-module.exports = { getUsers, setUser, getSpecificUser, updateProfilePicture, getTotalUserCount, updateUserRole };
+//update delivery man stats
+const updateDeliveryMan = async (req, res, next) => {
+    try {
+        const id = req.query.id;
+        const data = req.body;
+        const query = { _id: new mongoose.Types.ObjectId(id) };
+        const result = await userCollection.updateOne(query, data);
+        res.send(result);
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+
+
+module.exports = { getUsers, setUser, getSpecificUser, updateProfilePicture, getTotalUserCount, updateUserRole, updateDeliveryMan };

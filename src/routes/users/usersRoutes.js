@@ -1,4 +1,4 @@
-const { getUsers, setUser, getSpecificUser, updateProfilePicture, getTotalUserCount, updateUserRole } = require("../../controllers/users/usersController");
+const { getUsers, setUser, getSpecificUser, updateProfilePicture, getTotalUserCount, updateUserRole, updateDeliveryMan } = require("../../controllers/users/usersController");
 const verifyAdmin = require("../../middlewares/verifyAdmin");
 const verifyToken = require("../../middlewares/verifyToken");
 
@@ -20,7 +20,10 @@ router.post("/users", setUser);
 router.put("/users", verifyToken, updateProfilePicture);
 
 //Update user role
-router.put("/admin/users", verifyToken, verifyAdmin, updateUserRole)
+router.put("/admin/users", verifyToken, verifyAdmin, updateUserRole);
+
+//update delivery man info
+router.put("/delivery/users", verifyToken, updateDeliveryMan)
 
 
 

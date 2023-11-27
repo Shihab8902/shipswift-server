@@ -56,6 +56,22 @@ const getABooking = async (req, res, next) => {
 }
 
 
+
+
+//get delivery man specific booking
+const getDeliverymanBooking = async (req, res, next) => {
+    try {
+        const id = req.query.id;
+        const query = { deliveryManId: id };
+        const result = await bookingCollection.find(query);
+        res.send(result);
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+
 //post a new booking
 const postBooking = async (req, res, next) => {
     try {
@@ -87,4 +103,4 @@ const updateBooking = async (req, res, next) => {
 }
 
 
-module.exports = { postBooking, getUserSpecificBookings, getABooking, updateBooking, getBookings };
+module.exports = { postBooking, getUserSpecificBookings, getABooking, updateBooking, getBookings, getDeliverymanBooking };

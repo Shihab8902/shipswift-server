@@ -1,4 +1,4 @@
-const { postBooking, getUserSpecificBookings, getABooking, updateBooking, getBookings } = require("../../controllers/bookings/bookingsController");
+const { postBooking, getUserSpecificBookings, getABooking, updateBooking, getBookings, getDeliverymanBooking } = require("../../controllers/bookings/bookingsController");
 const verifyAdmin = require("../../middlewares/verifyAdmin");
 const verifyToken = require("../../middlewares/verifyToken");
 
@@ -10,6 +10,9 @@ router.get("/bookings", verifyToken, verifyAdmin, getBookings)
 
 //Get user specific bookings
 router.get("/booking", verifyToken, getUserSpecificBookings);
+
+//Get delivery man bookings
+router.get("/delivery/booking", verifyToken, getDeliverymanBooking);
 
 //Get a booking
 router.get("/booking/:id", getABooking);
