@@ -18,6 +18,7 @@ const bookingsRoutes = require("./routes/bookings/bookingsRoutes");
 const stripeRoutes = require("./routes/stripe/stripeRoutes");
 const paymentRoutes = require("./routes/payment/paymentRoutes");
 const deliveryManRoutes = require("./routes/delivery man/deliveryManRoutes");
+const reviewRoutes = require("./routes/review/reviewRoutes");
 
 
 //Use routes
@@ -28,6 +29,7 @@ app.use(bookingsRoutes);
 app.use(stripeRoutes);
 app.use(paymentRoutes);
 app.use(deliveryManRoutes);
+app.use(reviewRoutes);
 
 
 
